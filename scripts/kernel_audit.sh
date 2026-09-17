@@ -39,7 +39,12 @@ if ! grep -q 'let fresh := "--fresh"' "$audit_checker_source"; then
   exit 2
 fi
 
-mkdir -p "$audit_report"
+if [[ -e "$audit_report" || -L "$audit_report" ]]; then
+  printf 'Report path already exists; choose a new directory: %s\n' "$audit_report" >&2
+  exit 2
+fi
+mkdir -p "$(dirname "$audit_report")"
+mkdir "$audit_report"
 audit_report=$(cd "$audit_report" && pwd -P)
 export PATH="$audit_toolchain_bin:$PATH"
 export LEAN_NUM_THREADS=${LEAN_NUM_THREADS:-1}

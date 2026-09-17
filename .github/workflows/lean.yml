@@ -11,23 +11,37 @@ permissions:
 jobs:
   full-proof:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 240
+    env:
+      LEAN_NUM_THREADS: "1"
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Fetch and audit the pinned original proof
         run: |
+          printf 'CI_IDENTITY run=%s attempt=%s commit=%s\n' "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" "$GITHUB_SHA"
           bash scripts/fetch_upstream.sh
           python3 scripts/source_audit.py --output verification/source-audit.json
       - uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596 # v1.6.0
-        env:
-          LEAN_NUM_THREADS: "2"
         with:
-          build: true
+          build: false
           use-mathlib-cache: true
           use-github-cache: false
           leanchecker: false
-          axiom-audit: true
-          axiom-audit-root: Jsp467FullReview
+          axiom-audit: false
+      - name: Build proof source stage 1 of 6
+        run: python3 scripts/build_stage.py --stage 1
+      - name: Build proof source stage 2 of 6
+        run: python3 scripts/build_stage.py --stage 2
+      - name: Build proof source stage 3 of 6
+        run: python3 scripts/build_stage.py --stage 3
+      - name: Build proof source stage 4 of 6
+        run: python3 scripts/build_stage.py --stage 4
+      - name: Build proof source stage 5 of 6
+        run: python3 scripts/build_stage.py --stage 5
+      - name: Build proof source stage 6 of 6
+        run: python3 scripts/build_stage.py --stage 6
+      - name: Build independently stated complete theorem
+        run: lake build Jsp467FullReview
       - name: Print full-theorem axiom dependencies
         run: lake env lean Jsp467FullReview/Audit.lean
       - name: Replay the complete imported environment and inspect axiom bodies

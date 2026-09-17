@@ -129,7 +129,7 @@ With Git, Python 3.9+, and Elan installed, run from this repository:
 bash scripts/fetch_upstream.sh
 python3 scripts/source_audit.py --output verification/source-audit.json
 lake exe cache get
-LEAN_NUM_THREADS=2 lake build
+LEAN_NUM_THREADS=1 lake build
 lake env lean Jsp467FullReview/Audit.lean
 bash scripts/kernel_audit.sh . "$(lean --print-prefix)/bin" verification/kernel
 ```
@@ -140,6 +140,17 @@ package does not grant a license for the upstream code. Mathlib's matching
 compiled cache is used, but every module in the Erdős 577 proof dependency
 closure is compiled from source. CI starts without this project's build
 cache. A repeat local build may reuse its own previous outputs.
+
+CI compiles the same source closure in six deterministic topological stages
+(`python3 scripts/build_stage.py --stage 1` through `--stage 6`), followed by
+the independent bridge. This exposes intermediate progress without omitting
+any proof dependency. Lake uses one normal scheduling worker and each Lean
+compiler is limited to two threads via `weakLeanArgs`.
+
+The first complete-source CI attempt compiled 66 proof modules before receiving
+a termination signal (exit 143); its overall status is cancelled, not passed.
+No mathematical error was reported before termination. It is not evidence of
+a complete verification.
 
 ## References
 

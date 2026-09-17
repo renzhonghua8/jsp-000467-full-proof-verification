@@ -1,6 +1,7 @@
 name = "jsp467fullverification"
 version = "0.1.0"
 defaultTargets = ["Jsp467FullReview"]
+weakLeanArgs = ["-j2"]
 
 [[require]]
 name = "mathlib"
