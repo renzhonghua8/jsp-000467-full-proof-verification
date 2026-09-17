@@ -104,3 +104,10 @@ Do not describe a plain namespace-prefix checker run as checking all
 Mathlib dependencies. A full fresh check may be expensive because the
 upstream proof imports `Mathlib`; give it adequate time and memory and
 preserve logs. No full fresh check was run while preparing these tools.
+
+Run 35203111492 reached this check after a successful complete source build,
+but the job's four-hour limit terminated replay after about 51 minutes.
+This is incomplete replay, not kernel acceptance or a reported mathematical
+rejection. The retry uses a six-hour job budget and a 160-minute audit-step
+limit, with direct axiom-body traversal first and line-buffered checker output
+where `stdbuf` is available. The original `--fresh` scope is unchanged.

@@ -11,7 +11,7 @@ permissions:
 jobs:
   full-proof:
     runs-on: ubuntu-latest
-    timeout-minutes: 240
+    timeout-minutes: 360
     env:
       LEAN_NUM_THREADS: "1"
     steps:
@@ -45,4 +45,8 @@ jobs:
       - name: Print full-theorem axiom dependencies
         run: lake env lean Jsp467FullReview/Audit.lean
       - name: Replay the complete imported environment and inspect axiom bodies
-        run: bash scripts/kernel_audit.sh . "$(lean --print-prefix)/bin" verification/kernel
+        timeout-minutes: 160
+        run: |
+          free -h
+          df -h .
+          /usr/bin/time -v bash scripts/kernel_audit.sh . "$(lean --print-prefix)/bin" verification/kernel

@@ -70,15 +70,28 @@ esac
   printf 'Started UTC: %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 } | tee "$audit_report/configuration.txt"
 
-# Do not pass --help or -r: these unknown flags are silently ignored in 4.33/4.34.
-# A precise module avoids the package-name/default-prefix heuristic.
-"$audit_toolchain_bin/lake" env "$audit_toolchain_bin/leanchecker" --fresh --verbose "$audit_module" \
-  2>&1 | tee "$audit_report/kernel-fresh.log"
-
 # This traverses the actual checked constant bodies, not exported axiom summaries.
+# Run it before the expensive replay so its independent evidence survives a
+# replay timeout. It does not replace the required empty-environment replay.
+printf 'Starting direct axiom-body audit UTC: %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 "$audit_toolchain_bin/lake" env "$audit_toolchain_bin/lean" --run \
   "$audit_script_dir/AxiomClosure.lean" "$audit_module" "$@" \
   2>&1 | tee "$audit_report/axiom-closure.jsonl"
+printf 'Direct axiom-body audit finished UTC: %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+# Do not pass --help or -r: these unknown flags are silently ignored in 4.33/4.34.
+# A precise module avoids the package-name/default-prefix heuristic.
+# On Linux, line-buffer the checker output so its startup message is visible
+# even if the process is later terminated. This changes no checker arguments.
+printf 'Starting full fresh kernel replay UTC: %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+if command -v stdbuf >/dev/null 2>&1; then
+  "$audit_toolchain_bin/lake" env stdbuf -oL -eL \
+    "$audit_toolchain_bin/leanchecker" --fresh --verbose "$audit_module" \
+    2>&1 | tee "$audit_report/kernel-fresh.log"
+else
+  "$audit_toolchain_bin/lake" env "$audit_toolchain_bin/leanchecker" --fresh --verbose "$audit_module" \
+    2>&1 | tee "$audit_report/kernel-fresh.log"
+fi
 
 {
   printf 'PASS: full imported environment kernel replay completed.\n'

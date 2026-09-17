@@ -137,9 +137,9 @@ bash scripts/kernel_audit.sh . "$(lean --print-prefix)/bin" verification/kernel
 The proof is fetched unchanged from the pinned original repository into an
 ignored directory; no upstream proof source is redistributed here. This
 package does not grant a license for the upstream code. Mathlib's matching
-compiled cache is used, but every module in the Erdős 577 proof dependency
-closure is compiled from source. CI starts without this project's build
-cache. A repeat local build may reuse its own previous outputs.
+compiled cache is used, but the reproduction is configured to compile every
+module in the Erdős 577 proof dependency closure from source. CI starts without
+this project's build cache. A repeat local build may reuse its own previous outputs.
 
 CI compiles the same source closure in six deterministic topological stages
 (`python3 scripts/build_stage.py --stage 1` through `--stage 6`), followed by
@@ -151,6 +151,15 @@ The first complete-source CI attempt compiled 66 proof modules before receiving
 a termination signal (exit 143); its overall status is cancelled, not passed.
 No mathematical error was reported before termination. It is not evidence of
 a complete verification.
+
+Run [35203111492](https://github.com/renzhonghua8/jsp-000467-full-proof-verification/actions/runs/35203111492)
+subsequently completed all six proof-source stages, the independent bridge,
+and the axiom-printing step. GitHub then cancelled the job at its four-hour
+limit during the additional full imported-environment replay. That replay
+had about 51 minutes available and did not finish; no replay success or direct
+axiom-body audit result is claimed from this run. The retry grants a six-hour
+job budget, runs the direct axiom-body audit before replay, and preserves the
+same full `--fresh` checker scope. Mathematical statements and proofs are unchanged.
 
 ## References
 
