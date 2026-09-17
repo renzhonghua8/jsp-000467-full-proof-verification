@@ -118,7 +118,7 @@ def analyze_source(source):
             parsed_import_lines.append(lineno)
         elif line.strip() and in_header:
             first = tokens[0].group() if tokens else ""
-            if first not in BODY_STARTS and not line.lstrip().startswith("@["):
+            if first not in BODY_STARTS and first not in FORBIDDEN and not line.lstrip().startswith("@["):
                 raise AuditError("Unsupported header or multiline import on line {}".format(lineno))
             in_header = False
     if import_token_lines != parsed_import_lines:
