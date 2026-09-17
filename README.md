@@ -128,10 +128,10 @@ With Git, Python 3.9+, and Elan installed, run from this repository:
 ```sh
 bash scripts/fetch_upstream.sh
 python3 scripts/source_audit.py --output verification/source-audit.json
-lake update
 lake exe cache get
 LEAN_NUM_THREADS=2 lake build
 lake env lean Jsp467FullReview/Audit.lean
+bash scripts/kernel_audit.sh . "$(lean --print-prefix)/bin" verification/kernel
 ```
 
 The proof is fetched unchanged from the pinned original repository into an

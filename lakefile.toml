@@ -1,4 +1,4 @@
-name = "jsp467-full-verification"
+name = "jsp467fullverification"
 version = "0.1.0"
 defaultTargets = ["Jsp467FullReview"]
 

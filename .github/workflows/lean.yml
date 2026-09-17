@@ -25,9 +25,10 @@ jobs:
           build: true
           use-mathlib-cache: true
           use-github-cache: false
-          leanchecker: true
-          leanchecker-args: Jsp467FullReview
+          leanchecker: false
           axiom-audit: true
           axiom-audit-root: Jsp467FullReview
       - name: Print full-theorem axiom dependencies
         run: lake env lean Jsp467FullReview/Audit.lean
+      - name: Replay the complete imported environment and inspect axiom bodies
+        run: bash scripts/kernel_audit.sh . "$(lean --print-prefix)/bin" verification/kernel
