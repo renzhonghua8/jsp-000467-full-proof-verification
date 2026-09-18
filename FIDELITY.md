@@ -58,11 +58,13 @@ conditions; it does not assume the final theorem. The main import is
 `ErdosProblems.Erdos577.FinalCount`, not the separate comparator challenge
 file, which deliberately contains an unfinished benchmark placeholder.
 
-This source reading establishes semantic correspondence, not build success.
-Completion requires compiling the whole transitive proof dependency closure
-with Lean 4.33.0/mathlib 4.33.0 and checking the bridge's reported axioms.
-The upstream `SOURCE_AUDIT.md` contains historical status text and is not a
-substitute for that fresh verification.
+This source reading establishes semantic correspondence. Separately, the
+recorded reproduction compiled the whole 851-module transitive proof-source
+dependency closure and bridge with Lean 4.33.0 and the pinned Mathlib revision.
+It directly traversed the actual endpoint bodies, found exactly `propext`,
+`Classical.choice`, and `Quot.sound`, and completed a full imported-environment
+`--fresh` kernel replay. The upstream `SOURCE_AUDIT.md` remains historical
+context rather than a substitute for these newly observed results.
 
 ## Attribution
 

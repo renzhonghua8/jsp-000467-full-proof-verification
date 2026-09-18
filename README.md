@@ -5,11 +5,13 @@ quadrilateral theorem and connects it to an independently stated conclusion
 using standard Mathlib graph copies. It covers every natural number `k`,
 including all `k ≥ 2` cases omitted from our earlier four-vertex submission.
 
-**Verification status: pending.** The independent statement and bridge have
-been prepared, and the source review is in progress. The full transitive
-proof-source rebuild, bridge compilation, and final axiom reports must finish
-before this package can report a successful reproduction. Historical upstream
-build reports are evidence of prior work, not results of this reproduction.
+**Verification status: passed for checked commit
+`90eb2ad461ee23d9843b8972fc4a48ac9e566f62`.** GitHub Actions
+[run 35226375007](https://github.com/renzhonghua8/jsp-000467-full-proof-verification/actions/runs/35226375007)
+freshly compiled all 851 modules in the pinned proof-source closure and the
+independent bridge. It then completed both direct constant-body axiom audits
+and a full `--fresh` replay of the imported environment in Lean's kernel.
+The job and audit command exited successfully.
 
 ## Complete mathematical statement
 
@@ -38,7 +40,7 @@ first-formalization priority.
 Our contribution is the independent Mathlib statement, its bridge from the
 existing theorem, a source and statement audit, and reproducible evidence
 from rebuilding the complete transitive proof-source dependency closure.
-The last item remains pending until the recorded checks complete.
+The recorded reproduction completed successfully on 2026-09-17 UTC.
 
 The earlier submission proved only `k = 1`. Its prior-art search did not
 locate this full public development. The present review corrects that
@@ -89,11 +91,10 @@ an upstream packing definition.
 Both statements quantify over arbitrary `k` and arbitrary finite vertex
 types. Neither depends on our earlier `k = 1` proof.
 
-## Required verification evidence
+## Recorded verification evidence
 
-Before marking this reproduction complete, retain the exact commands,
-source hashes, environment revisions, process exit codes, and complete
-logs for:
+The evidence retains the exact commands, source hashes, environment revisions,
+process exit codes, and complete log for:
 
 - Source inventory and the complete transitive project import closure.
 - Rebuilding every module in that closure in the pinned environment.
@@ -110,6 +111,24 @@ Source scans alone do not prove correctness. A completed build alone does
 not establish that the formal statement matches the original mathematics.
 This package records both kinds of evidence separately.
 
+The successful run checked these exact records:
+
+| Record | Result |
+| --- | --- |
+| Review repository commit | `90eb2ad461ee23d9843b8972fc4a48ac9e566f62` |
+| Pinned upstream commit | `8822f7ddef30fadbd92e1c6ab4ed897af356af5e` |
+| Source closure | 851 modules; 851 unique fresh build records; no missing or duplicate module |
+| Source-audit SHA-256 | `b0b0fbbcbfd9255683e3b68b144374e4ade5900b1d27c6f08bfc7e1ce438a5b2` |
+| CI log SHA-256 | `1310b30b4309d33a36a6e574dd08757f758259d8ad93b0a8ffc699a5922e05c7` |
+| Evidence bundle | [`v1.0.0` archive](https://github.com/renzhonghua8/jsp-000467-full-proof-verification/releases/download/v1.0.0/jsp-000467-full-proof-verification-evidence-v1.0.0.tar.gz); 152,430 bytes; SHA-256 `85921e9051778d4a512a29fa840e029eaf946b0413d12c1c940fe133e9c7bfed` |
+| Direct axiom-body audit | All three endpoints contain exactly `propext`, `Classical.choice`, and `Quot.sound`; no disallowed axiom |
+| Full kernel replay | `leanchecker --fresh --verbose Jsp467FullReview.Bridge`; pass; exit status 0 |
+| Replay boundary | All transitive imports loaded for the bridge were replayed into an empty environment by the same Lean 4.33.0 kernel |
+
+Matching compiled Mathlib caches supplied stored terms. The replay rechecked
+those loaded mathematical declarations, but this is not a claim that Mathlib
+was compiled from source or that a separately implemented kernel was used.
+
 ## Prize and submission status
 
 This is a verification and statement-bridge contribution concerning an
@@ -118,8 +137,9 @@ not establish award eligibility or a recipient decision. Any public
 submission must retain the original mathematical and formalization credits
 and accurately report the completed checks and remaining limitations.
 
-This repository is a verification work in progress. Its existence is not
-evidence of a completed build, an official submission, or acceptance.
+This repository records a completed technical reproduction for the exact
+commit and run above. It does not constitute official Prize verification,
+acceptance, recipient confirmation, or an award decision.
 
 ## Reproduce
 
@@ -157,9 +177,14 @@ subsequently completed all six proof-source stages, the independent bridge,
 and the axiom-printing step. GitHub then cancelled the job at its four-hour
 limit during the additional full imported-environment replay. That replay
 had about 51 minutes available and did not finish; no replay success or direct
-axiom-body audit result is claimed from this run. The retry grants a six-hour
-job budget, runs the direct axiom-body audit before replay, and preserves the
-same full `--fresh` checker scope. Mathematical statements and proofs are unchanged.
+axiom-body audit result is claimed from this run.
+
+The replacement [run 35226375007](https://github.com/renzhonghua8/jsp-000467-full-proof-verification/actions/runs/35226375007)
+used a six-hour job budget while preserving the same theorem statements,
+source pins, and full `--fresh` checker scope. It completed all six stages,
+the bridge, axiom printing, direct constant-body inspection, and full replay
+successfully. The audit took 2:01:54 wall time, used at most 8,764,992 KiB
+resident memory for the combined audit command, and exited with status 0.
 
 ## References
 

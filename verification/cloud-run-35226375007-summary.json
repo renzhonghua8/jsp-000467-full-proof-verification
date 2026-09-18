@@ -1,0 +1,55 @@
+{
+  "status": "pass",
+  "ci_url": "https://github.com/renzhonghua8/jsp-000467-full-proof-verification/actions/runs/35226375007",
+  "ci_run_id": 35226375007,
+  "ci_run_attempt": 1,
+  "checked_commit": "90eb2ad461ee23d9843b8972fc4a48ac9e566f62",
+  "upstream_commit": "8822f7ddef30fadbd92e1c6ab4ed897af356af5e",
+  "source_modules": 851,
+  "freshly_compiled_source_modules": 851,
+  "source_audit_sha256": "b0b0fbbcbfd9255683e3b68b144374e4ade5900b1d27c6f08bfc7e1ce438a5b2",
+  "ci_log_sha256": "1310b30b4309d33a36a6e574dd08757f758259d8ad93b0a8ffc699a5922e05c7",
+  "kernel_replay": "all transitive imports replayed into an empty Lean kernel environment",
+  "axiom_reports": [
+    {
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "disallowedAxioms": [],
+      "exactStandardSet": true,
+      "method": "direct constant-body traversal; no axiom metadata lookup",
+      "onlyStandardAxioms": true,
+      "theorem": "Erdos577.erdos_577",
+      "visitedConstants": 69520
+    },
+    {
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "disallowedAxioms": [],
+      "exactStandardSet": true,
+      "method": "direct constant-body traversal; no axiom metadata lookup",
+      "onlyStandardAxioms": true,
+      "theorem": "Jsp467FullReview.erdos_faudree_full",
+      "visitedConstants": 69546
+    },
+    {
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "disallowedAxioms": [],
+      "exactStandardSet": true,
+      "method": "direct constant-body traversal; no axiom metadata lookup",
+      "onlyStandardAxioms": true,
+      "theorem": "Jsp467FullReview.erdos_faudree_full_pointwise",
+      "visitedConstants": 69530
+    }
+  ],
+  "boundary": "Mathlib caches provide stored terms for replay; no claim of compiling Mathlib from source or of a separately implemented kernel"
+}

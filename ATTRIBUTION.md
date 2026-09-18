@@ -40,8 +40,8 @@ The present contribution consists of:
   pairwise disjointness, and coverage of every vertex.
 - A bridge from the pinned upstream theorem to that statement.
 - A review of source dependencies, statement fidelity, and provenance.
-- Reproducible full proof-source rebuild evidence when the pending
-  verification finishes.
+- Reproducible evidence from the completed full proof-source rebuild,
+  statement bridge, direct axiom-body audit, and full kernel replay.
 
 These contributions do not claim authorship of Wang's mathematics or the
 upstream full Lean development. They do not claim first formalization,
@@ -57,8 +57,11 @@ not a dependency of the reviewed full proof.
 
 ## Verification status
 
-The current full proof-source rebuild and bridge verification are
-**pending**. Upstream historical success reports remain attributed to
-upstream. Only new commands and results actually observed in this review
-may later be added as independent reproduction evidence.
-
+The present review's reproduction **passed** for repository commit
+`90eb2ad461ee23d9843b8972fc4a48ac9e566f62` in GitHub Actions run
+[35226375007](https://github.com/renzhonghua8/jsp-000467-full-proof-verification/actions/runs/35226375007).
+It freshly compiled the 851-module pinned proof-source closure and bridge,
+found only the three standard Lean axioms in each requested endpoint through
+direct constant-body traversal, and completed a full imported-environment
+`--fresh` replay with exit status 0. Upstream historical success reports
+remain separately attributed to upstream.
